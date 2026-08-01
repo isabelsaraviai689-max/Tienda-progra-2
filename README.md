@@ -9,5 +9,10 @@ JDK 17 - Por compatibilidad.
 3. ID es único.
 4. No se permiten precios negativos.
 5. Stock no puede ser negativo.
-6. Máximo 50 productos.
-7. Separación por capas obligatoria.
+
+
+### Separación por capas obligatoria
+
+- **`model`** → Solo datos. Clases como `Producto`: atributos, getters/setters, `toString()`. Nada de lógica ni de `Scanner`.
+- **`service`** → La lógica y las reglas del negocio (validar, buscar, contar, etc.). No debe imprimir nada ni leer del `Scanner`.
+- **`ui`** → Todo lo que interactúa con el usuario: el `Main`, el menú, el `Scanner`. Aquí se llama al `service`, pero no se decide nada aquí, solo se pregunta y se muestra.
