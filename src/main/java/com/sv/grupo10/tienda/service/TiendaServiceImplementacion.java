@@ -7,25 +7,25 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Implementacion de TiendaService.
+ * Implementación de TiendaService.
  *
- * Cada quien trabaja en su branch y solo en su metodo:
+ * Cada quien trabaja en su branch y solo en su método:
  *   feature/agregar-mostrar        (Anderson)
  *   feature/buscar                 (Luis Alonso)
  *   feature/modificar              (Camila)
  *   feature/contar-validaciones    (Esmeralda)
  *
  * Array = seed (20 registros). List = store de trabajo.
- * Validaciones de negocio aqui. Re-pedir input invalido en UI.
- * Helpers de validacion solo al final (zona HELPERS).
+ * Validaciones de negocio aquí. Re-pedir input inválido en UI.
+ * Helpers de validación solo al final (zona HELPERS).
  */
 public class TiendaServiceImplementacion implements TiendaService {
 
     // Seed BA: 20 productos. No cambiar IDs sin acuerdo.
     private final Producto[] productosIniciales = {
             new Producto("P001", "Arroz San Francisco 1Kg", Categoria.GRANOS, 1.35, 45),
-            new Producto("P002", "Azucar Morena 1Kg", Categoria.GRANOS, 1.20, 38),
-            new Producto("P003", "Cafe Listo 250g", Categoria.BEBIDAS, 3.50, 25),
+            new Producto("P002", "Azúcar Morena 1Kg", Categoria.GRANOS, 1.20, 38),
+            new Producto("P003", "Café Listo 250g", Categoria.BEBIDAS, 3.50, 25),
             new Producto("P004", "Leche Entera 1L", Categoria.LACTEOS, 1.55, 30),
             new Producto("P005", "Pan de Caja", Categoria.PANADERIA, 2.10, 18),
             new Producto("P006", "Galletas Chocolate", Categoria.SNACKS, 1.80, 40),
@@ -34,10 +34,10 @@ public class TiendaServiceImplementacion implements TiendaService {
             new Producto("P009", "Aceite Vegetal 900ml", Categoria.COCINA, 3.95, 16),
             new Producto("P010", "Pasta Espagueti", Categoria.PASTAS, 1.15, 35),
             new Producto("P011", "Salsa de Tomate", Categoria.COCINA, 1.40, 20),
-            new Producto("P012", "Atun en Lata", Categoria.ENLATADOS, 2.25, 27),
-            new Producto("P013", "Jabon de Bano", Categoria.HIGIENE, 0.95, 55),
+            new Producto("P012", "Atún en Lata", Categoria.ENLATADOS, 2.25, 27),
+            new Producto("P013", "Jabón de Baño", Categoria.HIGIENE, 0.95, 55),
             new Producto("P014", "Shampoo 400ml", Categoria.HIGIENE, 4.80, 14),
-            new Producto("P015", "Papel Higienico 4 rollos", Categoria.LIMPIEZA, 3.25, 19),
+            new Producto("P015", "Papel Higiénico 4 rollos", Categoria.LIMPIEZA, 3.25, 19),
             new Producto("P016", "Detergente en Polvo", Categoria.LIMPIEZA, 5.60, 11),
             new Producto("P017", "Cloro 1L", Categoria.LIMPIEZA, 1.50, 24),
             new Producto("P018", "Cepillo Dental", Categoria.HIGIENE, 1.75, 33),
@@ -57,36 +57,72 @@ public class TiendaServiceImplementacion implements TiendaService {
 
     @Override
     public void agregar(Producto producto) {
-        // ASIGNACION (Anderson): agregar a "productos".
-        // Validar via helpers: ID unico "P"+3 digitos, nombre 3-50, categoria,
-        // precio > 0 con max 2 decimales, stock >= 0.
-        throw new UnsupportedOperationException("Pendiente: Anderson");
+        // ASIGNACION (Anderson): agregar a "productos" con validaciones de negocio.
+        if (producto == null) {
+            throw new IllegalArgumentException("El producto no puede ser nulo.");
+        }
+
+        // Validar formato de ID (P seguido de 3 dígitos)
+        if (producto.getId() == null || !producto.getId().matches("^P\\d{3}$")) {
+            throw new IllegalArgumentException("El ID debe tener el formato 'P' seguido de 3 dígitos (Ej: P021).");
+        }
+
+        // Validar ID único
+        if (buscar(producto.getId()) != null) {
+            throw new IllegalArgumentException("Ya existe un producto registrado con el ID: " + producto.getId());
+        }
+
+        // Validar Nombre (3 a 50 caracteres)
+        if (producto.getNombre() == null || producto.getNombre().trim().length() < 3 || producto.getNombre().trim().length() > 50) {
+            throw new IllegalArgumentException("El nombre debe contener entre 3 y 50 caracteres.");
+        }
+
+        // Validar Categoría
+        if (producto.getCategoria() == null) {
+            throw new IllegalArgumentException("Debe seleccionar una categoría válida.");
+        }
+
+        // Validar Precio (> 0)
+        if (producto.getPrecio() <= 0) {
+            throw new IllegalArgumentException("El precio debe ser un número mayor a 0.");
+        }
+
+        // Validar Stock (>= 0)
+        if (producto.getStock() < 0) {
+            throw new IllegalArgumentException("El stock debe ser un número entero igual o mayor a 0.");
+        }
+
+        // Si pasa todas las validaciones, se agrega a la lista compartida
+        this.productos.add(producto);
     }
 
     @Override
     public List<Producto> mostrar() {
-        // ASIGNACION (Anderson): retornar la lista (puede ir vacia).
-        // UI informa "lista vacia" si size == 0; aqui no imprimir.
-        throw new UnsupportedOperationException("Pendiente: Anderson");
+        // ASIGNACION (Anderson): retornar la lista de trabajo (store).
+        return this.productos;
     }
 
     @Override
     public Producto buscar(String id) {
-        // ASIGNACION (Luis Alonso): buscar por id. Si no hay, return null.
+        // ASIGNACION (Luis Alonso): buscar por ID en la lista "productos".
+        // Iterar sobre "productos" comparando id.
+        // Si lo encuentra, retornar la instancia del Producto. Si no existe, retornar null.
         throw new UnsupportedOperationException("Pendiente: Luis Alonso");
     }
 
     @Override
     public void modificar(String id, String nombre, Categoria categoria, double precio, int stock) {
-        // ASIGNACION (Camila): buscar por id y actualizar con setters.
-        // Si no existe, no detener la app, deberia retornar "no encontrado" o una excepción controlada.
-        // Revalidar: nombre 3-50, categoria, precio > 0 max 2 decimales, stock >= 0.
+        // ASIGNACION (Camila): buscar por ID y actualizar con los setters de la clase Producto.
+        // 1. Usar el método buscar(id) para obtener la referencia.
+        // 2. Si no existe, notificar que el registro no fue encontrado o lanzar excepción controlada.
+        // 3. Aplicar setters previa revalidación: nombre (3-50 chars), categoría validada, precio > 0, stock >= 0.
         throw new UnsupportedOperationException("Pendiente: Camila");
     }
 
     @Override
     public int contar() {
-        // ASIGNACION (Esmeralda): retornar cantidad registrada + helpers abajo.
+        // ASIGNACION (Esmeralda): retornar la cantidad total de productos registrados en "productos".
+        // Utilizar el método size() sobre el ArrayList de trabajo.
         throw new UnsupportedOperationException("Pendiente: Esmeralda");
     }
 
@@ -98,12 +134,12 @@ public class TiendaServiceImplementacion implements TiendaService {
 
     // -------------------------------------------------------------------------
     // HELPERS DE VALIDACION (Esmeralda; reusar en agregar/modificar)
-    // Solo metodos private aqui. No meterlos entre los CRUD.
+    // Solo métodos private aquí. No meterlos entre los CRUD.
     // Reglas SM:
-    // - ID: no vacio, unico, formato "P" + 3 digitos (P001)
+    // - ID: no vacío, único, formato "P" + 3 dígitos (P001)
     // - Nombre: 3-50 caracteres
-    // - Categoria: enum != null
-    // - Precio: > 0, maximo 2 decimales
+    // - Categoría: enum != null
+    // - Precio: > 0, máximo 2 decimales
     // - Stock: entero >= 0
     // -------------------------------------------------------------------------
 }
