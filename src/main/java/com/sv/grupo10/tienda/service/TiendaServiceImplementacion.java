@@ -57,7 +57,7 @@ public class TiendaServiceImplementacion implements TiendaService {
 
     @Override
     public void agregar(Producto producto) {
-        // TODO (Anderson): agregar a "productos".
+        // ASIGNACION (Anderson): agregar a "productos".
         // Validar via helpers: ID unico "P"+3 digitos, nombre 3-50, categoria,
         // precio > 0 con max 2 decimales, stock >= 0.
         throw new UnsupportedOperationException("Pendiente: Anderson");
@@ -65,20 +65,20 @@ public class TiendaServiceImplementacion implements TiendaService {
 
     @Override
     public List<Producto> mostrar() {
-        // TODO (Anderson): retornar la lista (puede ir vacia).
+        // ASIGNACION (Anderson): retornar la lista (puede ir vacia).
         // UI informa "lista vacia" si size == 0; aqui no imprimir.
         throw new UnsupportedOperationException("Pendiente: Anderson");
     }
 
     @Override
     public Producto buscar(String id) {
-        // TODO (Luis Alonso): buscar por id. Si no hay, return null.
+        // ASIGNACION (Luis Alonso): buscar por id. Si no hay, return null.
         throw new UnsupportedOperationException("Pendiente: Luis Alonso");
     }
 
     @Override
     public void modificar(String id, String nombre, Categoria categoria, double precio, int stock) {
-        // TODO (Camila): buscar por id y actualizar con setters.
+        // ASIGNACION (Camila): buscar por id y actualizar con setters.
         // Si no existe, no detener la app, deberia retornar "no encontrado" o una excepción controlada.
         // Revalidar: nombre 3-50, categoria, precio > 0 max 2 decimales, stock >= 0.
         throw new UnsupportedOperationException("Pendiente: Camila");
@@ -86,7 +86,7 @@ public class TiendaServiceImplementacion implements TiendaService {
 
     @Override
     public int contar() {
-        // TODO (Esmeralda): retornar cantidad registrada + helpers abajo.
+        // ASIGNACION (Esmeralda): retornar cantidad registrada + helpers abajo.
         throw new UnsupportedOperationException("Pendiente: Esmeralda");
     }
 
