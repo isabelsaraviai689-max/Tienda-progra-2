@@ -54,3 +54,8 @@ com.sv.grupo10.tienda
 ├── service/   TiendaService, TiendaServiceImplementacion
 └── ui/        Main
 ```
+# Conceptos
+- BA: Business Analyst
+- PO: Product Owner
+- SM: Scrum Master
+- DEV: Developers
