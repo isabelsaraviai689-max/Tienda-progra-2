@@ -45,7 +45,6 @@ JDK 17.
 | Isabel | Menu en `ui.Main` (incl. lista vacia / no encontrado) |
 
 Ya en la base: seed de 20 productos y `convertirALista()`.
-Los metodos CRUD siguen pendientes (stubs).
 
 ## Estructura
 
