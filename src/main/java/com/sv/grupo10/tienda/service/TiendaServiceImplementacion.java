@@ -79,7 +79,7 @@ public class TiendaServiceImplementacion implements TiendaService {
     @Override
     public void modificar(String id, String nombre, Categoria categoria, double precio, int stock) {
         // TODO (Camila): buscar por id y actualizar con setters.
-        // Si no existe, no tumbar la app (UI muestra "no encontrado").
+        // Si no existe, no detener la app, deberia retornar "no encontrado" o una excepción controlada.
         // Revalidar: nombre 3-50, categoria, precio > 0 max 2 decimales, stock >= 0.
         throw new UnsupportedOperationException("Pendiente: Camila");
     }
