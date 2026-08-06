@@ -77,6 +77,20 @@ public class Main {
                         break;
 
                     case 3:
+                        // Lógica para BUSCAR (Luis Alonso)
+                        System.out.println("\n--- BUSCAR PRODUCTO POR ID ---");
+                        System.out.print("Ingrese el ID a buscar (formato P###, ej. P010): ");
+                        String idBusqueda = sc.nextLine();
+
+                        Producto encontrado = service.buscar(idBusqueda);
+                        if (encontrado == null) {
+                            System.out.println("\n[!] No se encontró ningún producto con el ID: " + idBusqueda.trim());
+                        } else {
+                            System.out.println("\n[✓] Producto encontrado:");
+                            System.out.println(encontrado);
+                        }
+                        break;
+
                     case 4:
                     case 5:
                         System.out.println("\n[i] Módulo en desarrollo por otros integrantes.");
