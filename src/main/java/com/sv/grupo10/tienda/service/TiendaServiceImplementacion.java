@@ -121,10 +121,36 @@ public class TiendaServiceImplementacion implements TiendaService {
     @Override
     public void modificar(String id, String nombre, Categoria categoria, double precio, int stock) {
         // ASIGNACION (Camila): buscar por ID y actualizar con los setters de la clase Producto.
-        // 1. Usar el método buscar(id) para obtener la referencia.
-        // 2. Si no existe, notificar que el registro no fue encontrado o lanzar excepción controlada.
-        // 3. Aplicar setters previa revalidación: nombre (3-50 chars), categoría validada, precio > 0, stock >= 0.
-        throw new UnsupportedOperationException("Pendiente: Camila");
+        // 1. Buscar el producto por su ID
+        Producto p = buscar(id);
+
+        // 2. Verificar existencia
+        if (p == null) {
+            throw new IllegalArgumentException("No existe un producto registrado con el ID: " + id);
+        }
+
+        // 3. Revalidacion de datos de entrada
+        if (nombre == null || nombre.trim().length() < 3 || nombre.trim().length() > 50) {
+            throw new IllegalArgumentException("El nombre debe contener entre 3 y 50 caracteres.");
+        }
+
+        if (categoria == null) {
+            throw new IllegalArgumentException("Debe seleccionar una categoria valida.");
+        }
+
+        if (precio <= 0) {
+            throw new IllegalArgumentException("El precio debe ser un numero mayor a 0.");
+        }
+
+        if (stock < 0) {
+            throw new IllegalArgumentException("El stock debe ser un numero entero igual o mayor a 0.");
+        }
+
+        // 4. Actualizar mediante setters
+        p.setNombre(nombre.trim());
+        p.setCategoria(categoria);
+        p.setPrecio(precio);
+        p.setStock(stock);
     }
 
     @Override
