@@ -104,10 +104,18 @@ public class TiendaServiceImplementacion implements TiendaService {
 
     @Override
     public Producto buscar(String id) {
-        // ASIGNACION (Luis Alonso): buscar por ID en la lista "productos".
-        // Iterar sobre "productos" comparando id.
-        // Si lo encuentra, retornar la instancia del Producto. Si no existe, retornar null.
-        throw new UnsupportedOperationException("Pendiente: Luis Alonso");
+        // (Luis Alonso) Busqueda secuencial por ID sobre la lista de trabajo (JCF).
+        if (id == null || id.trim().isEmpty()) {
+            return null; // Regla: entrada invalida / no encontrado -> null (la UI informa)
+        }
+
+        String idBuscado = id.trim();
+        for (Producto producto : productos) {
+            if (producto.getId().equalsIgnoreCase(idBuscado)) {
+                return producto; // Encontrado: se retorna la instancia
+            }
+        }
+        return null; // Sin coincidencias
     }
 
     @Override
