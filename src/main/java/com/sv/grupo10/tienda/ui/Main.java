@@ -92,8 +92,41 @@ public class Main {
                         break;
 
                     case 4:
+                        // Integración UI: conecta modificar() de Camila (service ya en main).
+                        System.out.println("\n--- MODIFICAR PRODUCTO ---");
+                        System.out.print("ID del producto a modificar (P###): ");
+                        String idMod = sc.nextLine();
+
+                        Producto actual = service.buscar(idMod);
+                        if (actual == null) {
+                            System.out.println("\n[!] No se encontró ningún producto con el ID: " + idMod.trim());
+                            break;
+                        }
+
+                        System.out.println("Producto actual: " + actual);
+                        System.out.print("Nuevo nombre (3 a 50 chars): ");
+                        String nombreMod = sc.nextLine();
+
+                        System.out.println("Categorías disponibles:");
+                        for (Categoria c : Categoria.values()) {
+                            System.out.println(" - " + c.name() + " (" + c.getEtiqueta() + ")");
+                        }
+                        System.out.print("Nueva categoría (ej. LIMPIEZA): ");
+                        Categoria catMod = Categoria.valueOf(sc.nextLine().trim().toUpperCase());
+
+                        System.out.print("Nuevo precio ($): ");
+                        double precioMod = Double.parseDouble(sc.nextLine());
+
+                        System.out.print("Nuevo stock: ");
+                        int stockMod = Integer.parseInt(sc.nextLine());
+
+                        service.modificar(idMod, nombreMod, catMod, precioMod, stockMod);
+                        System.out.println("\n[✓] Producto modificado exitosamente.");
+                        break;
+
                     case 5:
-                        System.out.println("\n[i] Módulo en desarrollo por otros integrantes.");
+                        // Pendiente: Esmeralda (contar).
+                        System.out.println("\n[i] Módulo contar en desarrollo (Esmeralda).");
                         break;
 
                     case 6:
