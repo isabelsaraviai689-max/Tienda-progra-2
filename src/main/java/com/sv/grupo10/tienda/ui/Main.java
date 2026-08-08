@@ -125,8 +125,9 @@ public class Main {
                         break;
 
                     case 5:
-                        // Pendiente: Esmeralda (contar).
-                        System.out.println("\n[i] Módulo contar en desarrollo (Esmeralda).");
+                        // Contar (Esmeralda)
+                        int total = service.contar();
+                        System.out.println("\n[i] Total de productos registrados: " + total);
                         break;
 
                     case 6:
