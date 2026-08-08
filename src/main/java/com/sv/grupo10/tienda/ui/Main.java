@@ -17,11 +17,11 @@ public class Main {
 
         do {
             System.out.println("\n===== MENU TIENDA - GRUPO 10 =====");
-            System.out.println("1. Mostrar productos (Anderson)");
-            System.out.println("2. Agregar producto (Anderson)");
-            System.out.println("3. Buscar producto por ID (Luis Alonso)");
-            System.out.println("4. Modificar producto (Camila)");
-            System.out.println("5. Contar productos (Esmeralda)");
+            System.out.println("1. Mostrar productos");
+            System.out.println("2. Agregar producto");
+            System.out.println("3. Buscar producto por ID");
+            System.out.println("4. Modificar producto");
+            System.out.println("5. Contar productos");
             System.out.println("6. Salir");
             System.out.print("Seleccione una opción: ");
 
