@@ -3,6 +3,7 @@ package com.sv.grupo10.tienda.service;
 import com.sv.grupo10.tienda.model.Categoria;
 import com.sv.grupo10.tienda.model.Producto;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -62,37 +63,13 @@ public class TiendaServiceImplementacion implements TiendaService {
             throw new IllegalArgumentException("El producto no puede ser nulo.");
         }
 
-        // Validar formato de ID (P seguido de 3 dígitos)
-        if (producto.getId() == null || !producto.getId().matches("^P\\d{3}$")) {
-            throw new IllegalArgumentException("El ID debe tener el formato 'P' seguido de 3 dígitos (Ej: P021).");
-        }
+        // Helpers de validación (Esmeralda)
+        validarId(producto.getId());
+        validarNombre(producto.getNombre());
+        validarCategoria(producto.getCategoria());
+        validarPrecio(producto.getPrecio());
+        validarStock(producto.getStock());
 
-        // Validar ID único
-        if (buscar(producto.getId()) != null) {
-            throw new IllegalArgumentException("Ya existe un producto registrado con el ID: " + producto.getId());
-        }
-
-        // Validar Nombre (3 a 50 caracteres)
-        if (producto.getNombre() == null || producto.getNombre().trim().length() < 3 || producto.getNombre().trim().length() > 50) {
-            throw new IllegalArgumentException("El nombre debe contener entre 3 y 50 caracteres.");
-        }
-
-        // Validar Categoría
-        if (producto.getCategoria() == null) {
-            throw new IllegalArgumentException("Debe seleccionar una categoría válida.");
-        }
-
-        // Validar Precio (> 0)
-        if (producto.getPrecio() <= 0) {
-            throw new IllegalArgumentException("El precio debe ser un número mayor a 0.");
-        }
-
-        // Validar Stock (>= 0)
-        if (producto.getStock() < 0) {
-            throw new IllegalArgumentException("El stock debe ser un número entero igual o mayor a 0.");
-        }
-
-        // Si pasa todas las validaciones, se agrega a la lista compartida
         this.productos.add(producto);
     }
 
@@ -121,32 +98,18 @@ public class TiendaServiceImplementacion implements TiendaService {
     @Override
     public void modificar(String id, String nombre, Categoria categoria, double precio, int stock) {
         // ASIGNACION (Camila): buscar por ID y actualizar con los setters de la clase Producto.
-        // 1. Buscar el producto por su ID
         Producto p = buscar(id);
 
-        // 2. Verificar existencia
         if (p == null) {
             throw new IllegalArgumentException("No existe un producto registrado con el ID: " + id);
         }
 
-        // 3. Revalidacion de datos de entrada
-        if (nombre == null || nombre.trim().length() < 3 || nombre.trim().length() > 50) {
-            throw new IllegalArgumentException("El nombre debe contener entre 3 y 50 caracteres.");
-        }
+        // Revalidación con helpers (Esmeralda)
+        validarNombre(nombre);
+        validarCategoria(categoria);
+        validarPrecio(precio);
+        validarStock(stock);
 
-        if (categoria == null) {
-            throw new IllegalArgumentException("Debe seleccionar una categoria valida.");
-        }
-
-        if (precio <= 0) {
-            throw new IllegalArgumentException("El precio debe ser un numero mayor a 0.");
-        }
-
-        if (stock < 0) {
-            throw new IllegalArgumentException("El stock debe ser un numero entero igual o mayor a 0.");
-        }
-
-        // 4. Actualizar mediante setters
         p.setNombre(nombre.trim());
         p.setCategoria(categoria);
         p.setPrecio(precio);
@@ -156,8 +119,7 @@ public class TiendaServiceImplementacion implements TiendaService {
     @Override
     public int contar() {
         // ASIGNACION (Esmeralda): retornar la cantidad total de productos registrados en "productos".
-        // Utilizar el método size() sobre el ArrayList de trabajo.
-        throw new UnsupportedOperationException("Pendiente: Esmeralda");
+        return this.productos.size();
     }
 
     @Override
@@ -176,4 +138,41 @@ public class TiendaServiceImplementacion implements TiendaService {
     // - Precio: > 0, máximo 2 decimales
     // - Stock: entero >= 0
     // -------------------------------------------------------------------------
+
+    private void validarId(String id) {
+        if (id == null || !id.matches("^P\\d{3}$")) {
+            throw new IllegalArgumentException("El ID debe tener el formato 'P' seguido de 3 dígitos (Ej: P021).");
+        }
+        if (buscar(id) != null) {
+            throw new IllegalArgumentException("Ya existe un producto registrado con el ID: " + id);
+        }
+    }
+
+    private void validarNombre(String nombre) {
+        if (nombre == null || nombre.trim().length() < 3 || nombre.trim().length() > 50) {
+            throw new IllegalArgumentException("El nombre debe contener entre 3 y 50 caracteres.");
+        }
+    }
+
+    private void validarCategoria(Categoria categoria) {
+        if (categoria == null) {
+            throw new IllegalArgumentException("Debe seleccionar una categoría válida.");
+        }
+    }
+
+    private void validarPrecio(double precio) {
+        if (precio <= 0) {
+            throw new IllegalArgumentException("El precio debe ser mayor a 0 y con máximo 2 decimales.");
+        }
+        BigDecimal bd = BigDecimal.valueOf(precio).stripTrailingZeros();
+        if (bd.scale() > 2) {
+            throw new IllegalArgumentException("El precio debe ser mayor a 0 y con máximo 2 decimales.");
+        }
+    }
+
+    private void validarStock(int stock) {
+        if (stock < 0) {
+            throw new IllegalArgumentException("El stock debe ser un número entero igual o mayor a 0.");
+        }
+    }
 }
